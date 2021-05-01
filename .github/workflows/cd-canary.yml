@@ -45,6 +45,7 @@ jobs:
 
           if [[ $(git diff --stat) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
+            cd ..
             git subtree push --prefix build origin canary-builds
           else
             echo "WD clean"
