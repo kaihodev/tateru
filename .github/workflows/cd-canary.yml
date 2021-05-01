@@ -43,7 +43,7 @@ jobs:
           cd ./build
           git add --all
 
-          if [[ $(git diff --stat) != '' ]]; then
+          if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
             cd ..
             git subtree push --prefix build origin canary-builds
