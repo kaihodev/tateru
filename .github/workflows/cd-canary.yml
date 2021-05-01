@@ -10,7 +10,7 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.CANARY_DEPLOY }}
@@ -41,4 +41,4 @@ jobs:
 
           git commit -m "Deploy canary - based on ${{ steps.vars.outputs.sha_short }}"
 
-          git push --force origin
+          git push --force origin canary-builds
