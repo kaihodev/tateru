@@ -36,7 +36,7 @@ jobs:
           git checkout -b canary-builds
           git branch --set-upstream-to=origin/canary-builds
           cd ./build
-          git rm -rf .
+          git rm -rf . || echo "unable to rm -rf ."
           git add --all
 
           git commit -m "Deploy canary - based on ${{ steps.vars.outputs.sha_short }}"
