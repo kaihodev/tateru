@@ -43,6 +43,9 @@ jobs:
           cd ./build
           git add --all
 
-          git commit -m "Deploy canary - based on ${{ github.sha }}"
-
-          git subtree push --prefix build --force origin canary-builds
+          if [[ $(git diff --stat) != '' ]]; then
+            git commit -m "Deploy canary - based on ${{ github.sha }}"
+            git subtree push --prefix build origin canary-builds
+          else
+            echo "WD clean"
+          fi
