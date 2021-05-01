@@ -1,0 +1,45 @@
+name: 'CD: Canary'
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  gh-release:
+    name: 'Release canary build to GitHub'
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.CANARY_DEPLOY }}
+
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+
+      - name: Build Canary
+        run: |
+          chmod +x ./gobuild.sh
+          ./gobuild.sh
+
+      - name: Release Canary Build
+        env:
+          USE_SSH: true
+          GIT_USER: ${{ secrets.GH_USER }}
+
+        run: |
+          git config --global user.email '${{ secrets.GH_EMAIL }}'
+          git config --global user.name '${{ secrets.GH_USER }}'
+
+          git checkout origin/canary-builds
+          git checkout -b canary-builds
+          git branch --set-upstream-to=origin/canary-builds
+          cd ./build
+          git rm -rf .
+          git add --all
+
+          git commit -m "Deploy canary - based on ${{ steps.vars.outputs.sha_short }}"
+
+          git push --force origin
