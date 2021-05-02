@@ -41,6 +41,7 @@ jobs:
           git branch --set-upstream-to=origin/canary-builds
 
           cd ./build
+          git pull
           git add --all
 
           if [[ $(git diff --stat --staged) != '' ]]; then
