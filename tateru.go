@@ -11,5 +11,10 @@ func main() {
 	cfg := tateru.FromTomlFile("", nil)
 	log.Printf("[tateru] resolved config: %v", cfg)
 	opts := api.BuildOptions{Write: true, Format: cfg.OutFormat()}
+	if cfg.OutType() == tateru.File {
+		opts.Outfile = *cfg.OutPath()
+	} else {
+		opts.Outdir = *cfg.OutPath()
+	}
 	log.Println(opts)
 }
