@@ -41,13 +41,12 @@ jobs:
           git branch --set-upstream-to=origin/canary-builds
 
           cd ./build
-          git pull
           git add --all
 
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
             cd ..
-            git push origin `git subtree split --prefix build develop`:canary-builds --force
+            git push origin $(git subtree push --prefix build origin canary-builds):canary-builds --force
           else
             echo "WD clean"
           fi
