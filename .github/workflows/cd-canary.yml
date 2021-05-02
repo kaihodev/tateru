@@ -10,6 +10,7 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         os: [freebsd, linux, netbsd, openbsd]
         arch: [amd64, 386, arm, arm64, ppc64, ppc64le, mips, mipsle, mips64, mips64le]
@@ -43,6 +44,13 @@ jobs:
         run: |
           git config --global user.email '${{ secrets.GH_EMAIL }}'
           git config --global user.name '${{ secrets.GH_USER }}'
+          mkdir build
+          cd ./build
+          git init
+          git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
+          git checkout -b canary-builds
+          git pull
+          cd ..
 
       - name: Build Canary
         env:
@@ -57,9 +65,6 @@ jobs:
           GIT_USER: ${{ secrets.GH_USER }}
         run: |
           cd ./build
-          git init
-          git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
-          git checkout -b canary-builds
           git add --all
 
           if [[ $(git diff --stat --staged) != '' ]]; then
