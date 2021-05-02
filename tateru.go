@@ -10,5 +10,6 @@ func main() {
 	println("[tateru] starting...")
 	cfg := tateru.FromTomlFile("", nil)
 	log.Printf("[tateru] resolved config: %v", cfg)
-	_ = api.BuildOptions{Write: true}
+	opts := api.BuildOptions{Write: true, Format: cfg.OutFormat()}
+	log.Println(opts)
 }
