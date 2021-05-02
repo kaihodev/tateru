@@ -80,7 +80,11 @@ jobs:
 
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
-            git pull && git push --set-upstream origin canary-builds
+            git pull origin canary-builds && git push --set-upstream origin canary-builds
+            while [ $? -ne 0 ]
+            do
+              sleep 5 && git pull origin canary-builds && git push --set-upstream origin canary-builds
+            done
           else
             echo "WD clean"
           fi
