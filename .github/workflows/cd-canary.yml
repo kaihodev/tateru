@@ -9,6 +9,23 @@ jobs:
     name: 'Release canary build to GitHub'
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [freebsd, linux, netbsd, openbsd]
+        arch: [amd64, 386, arm, arm64, ppc64, ppc64le, mips, mipsle, mips64, mips64le]
+        include:
+          - os: darwin
+            arch: amd64
+          - os: dragonfly
+            arch: amd64
+          - os: dragonfly
+            arch: 386
+          - os: windows
+            arch: 386
+          - os: windows
+            arch: amd64
+          - os: solaris
+            arch: amd64
     steps:
       - uses: actions/checkout@v2
         with:
@@ -28,8 +45,11 @@ jobs:
           git config --global user.name '${{ secrets.GH_USER }}'
 
       - name: Build Canary
+        env:
+          GOOS: ${{ matrix.os }}
+          GOARCH: ${{ matrix.arch }}
         run: |
-          bash ./gobuild.sh
+          go build -o build/"$GOOS"-"$GOARCH"-tateru
 
       - name: Release Canary Build
         env:
