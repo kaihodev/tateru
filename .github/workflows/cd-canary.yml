@@ -36,17 +36,15 @@ jobs:
           USE_SSH: true
           GIT_USER: ${{ secrets.GH_USER }}
         run: |
-          git checkout origin/canary-builds
-          git checkout -b canary-builds
-          git branch --set-upstream-to=origin/canary-builds
-
           cd ./build
+          git init
+          git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
+          git checkout -b canary-builds
           git add --all
 
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
-            cd ..
-            git push origin $(git subtree push --prefix build origin canary-builds):canary-builds --force
+            git push --set-upstream origin canary-builds --force
           else
             echo "WD clean"
           fi
