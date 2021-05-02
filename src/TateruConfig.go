@@ -2,7 +2,6 @@ package tateru
 
 import (
 	"github.com/chunni/fiptoml"
-	"github.com/evanw/esbuild/pkg/api"
 	tateru "github.com/kaihodev/tateru/src/reflect"
 	"log"
 	"reflect"
@@ -55,14 +54,6 @@ const (
 	File OutType = false
 	Dir          = !File
 )
-func (c *RunConfig) OutType() OutType { return c.outDir == nil }
-func (c *RunConfig) OutPath() *string { if c.OutType() == Dir { return c.outDir } else { return c.outFile } }
-
-func (c *RunConfig) OutFormat() api.Format {
-	if c.cjs { return api.FormatCommonJS }
-	if c.ejs { return api.FormatESModule }
-	return api.FormatDefault
-}
 
 func FromToml(t *fiptoml.Toml, modules []string) *Config {
 	cfg := &Config{}

@@ -16,5 +16,6 @@ func main() {
 	} else {
 		opts.Outdir = *cfg.OutPath()
 	}
+	opts.Write = cfg.Write()
 	log.Println(opts)
 }
