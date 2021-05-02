@@ -13,20 +13,30 @@ jobs:
       fail-fast: false
       matrix:
         os: [freebsd, linux, netbsd, openbsd]
-        arch: [amd64, 386, arm, arm64, ppc64, ppc64le, mips, mipsle, mips64, mips64le]
+        arch: [amd64, 386, arm, arm64]
         include:
           - os: darwin
             arch: amd64
           - os: dragonfly
             arch: amd64
-          - os: dragonfly
-            arch: 386
           - os: windows
             arch: 386
           - os: windows
             arch: amd64
           - os: solaris
             arch: amd64
+          - os: linux
+            arch: mips
+          - os: linux
+            arch: mipsle
+          - os: linux
+            arch: mips64
+          - os: linux
+            arch: mips64le
+          - os: linux
+            arch: ppc64
+          - os: linux
+            arch: ppc64le
     steps:
       - uses: actions/checkout@v2
         with:
@@ -70,7 +80,7 @@ jobs:
 
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
-            git push --set-upstream origin canary-builds --force
+            git pull && git push --set-upstream origin canary-builds
           else
             echo "WD clean"
           fi
