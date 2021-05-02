@@ -12,3 +12,14 @@ func (c *RunConfig) OutFormat() api.Format {
 }
 
 func (c *RunConfig) Write() bool { return c.write }
+
+func (c *RunConfig) Platform() api.Platform {
+	switch *c.platform {
+	case "node":
+		return api.PlatformNode
+	case "browser":
+		return api.PlatformBrowser
+	default:
+		return api.PlatformNeutral
+	}
+}

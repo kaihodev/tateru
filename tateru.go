@@ -17,5 +17,6 @@ func main() {
 		opts.Outdir = *cfg.OutPath()
 	}
 	opts.Write = cfg.Write()
+	opts.Platform = cfg.Platform()
 	log.Println(opts)
 }
