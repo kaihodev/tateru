@@ -22,6 +22,8 @@ type RunConfig struct {
 	minify       bool
 	tsconfig     *string
 	outExtension map[string]string
+
+	name string
 }
 
 type Config struct {
@@ -36,7 +38,7 @@ const (
 
 type CfgMapT = map[string]*RunConfig
 var ConfigPresets = CfgMapT{
-	EmptyConfigName: &RunConfig{},
+	EmptyConfigName: &RunConfig{name: EmptyConfigName},
 	DefaultConfigName: &RunConfig{
 		extends:  tateru.String(EmptyConfigName),
 		write:    true,
@@ -44,6 +46,7 @@ var ConfigPresets = CfgMapT{
 		target:   tateru.String("esnext"),
 		minify:   true,
 		tsconfig: tateru.String("tsconfig.json"),
+		name:     DefaultConfigName,
 	},
 }
 
@@ -82,7 +85,9 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 		m = modules[i]
 		module, err := t.GetTableToml(m)
 		if err != nil { log.Fatalf("Unable to find module to build: %s", m) }
-		builds[m] = MakeRunConfigFromToml(module)
+		c := MakeRunConfigFromToml(module)
+		c.name = m
+		builds[m] = c
 	}
 	cfg.builds = builds
 
