@@ -82,9 +82,9 @@ jobs:
             git commit -m "Deploy canary - based on ${{ github.sha }}"
             export failed=0
             (git pull origin canary-builds && git push --set-upstream origin canary-builds) || export failed=1
-            while [ $failed -ne 0 ]
+            while [ $failed -eq 1 ]
             do
-              (sleep 5 && git pull origin canary-builds && git push --set-upstream origin canary-builds && export failed=0) || echo "retrying push..."
+              (sleep 5 && git pull origin canary-builds && git push --set-upstream origin canary-builds && unset failed) || echo "retrying push..."
             done
           else
             echo "WD clean"
