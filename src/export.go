@@ -5,7 +5,7 @@ import "github.com/evanw/esbuild/pkg/api"
 func (c *RunConfig) OutType() OutType { return c.outDir == nil }
 func (c *RunConfig) OutPath() *string { if c.OutType() == Dir { return c.outDir } else { return c.outFile } }
 
-func (c *RunConfig) OutFormat() api.Format {
+func (c *RunConfig) Format() api.Format {
 	if c.cjs { return api.FormatCommonJS }
 	if c.ejs { return api.FormatESModule }
 	return api.FormatDefault
@@ -23,3 +23,5 @@ func (c *RunConfig) Platform() api.Platform {
 		return api.PlatformNeutral
 	}
 }
+
+func (c *RunConfig) Inputs() []string { return c.inputs }

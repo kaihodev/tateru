@@ -10,7 +10,7 @@ func main() {
 	println("[tateru] starting...")
 	cfg := tateru.FromTomlFile("", nil)
 	log.Printf("[tateru] resolved config: %v", cfg)
-	opts := api.BuildOptions{Write: true, Format: cfg.OutFormat()}
+	opts := api.BuildOptions{}
 	if cfg.OutType() == tateru.File {
 		opts.Outfile = *cfg.OutPath()
 	} else {
@@ -18,5 +18,7 @@ func main() {
 	}
 	opts.Write = cfg.Write()
 	opts.Platform = cfg.Platform()
+	opts.Format = cfg.Format()
+	opts.EntryPoints = cfg.Inputs()
 	log.Println(opts)
 }
