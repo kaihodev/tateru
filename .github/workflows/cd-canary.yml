@@ -81,11 +81,11 @@ jobs:
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
             export failed=0
-            (git pull origin canary-builds && git push --set-upstream origin canary-builds) || export failed=1
-            while [ $failed -eq 1 ]
+            (git pull origin canary-builds && git push --set-upstream origin canary-builds) || export failed="1"
+            while [ "$failed" -eq "1" ]
             do
-              (sleep 3 && git pull origin canary-builds && git push --set-upstream origin canary-builds && export success=1) || echo "retrying push..."
-              if [ $success -eq 1 ]
+              (sleep 3 && git pull origin canary-builds && git push --set-upstream origin canary-builds && export success="1") || echo "retrying push..."
+              if [ "$success" -eq "1" ]
               then
                 break
               fi
