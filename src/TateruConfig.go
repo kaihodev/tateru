@@ -10,17 +10,18 @@ import (
 )
 
 type RunConfig struct {
-	extends *string
-	outDir *string
-	outFile *string
-	inputs []string
-	ejs bool
-	cjs bool
-	bundle bool
-	target *string
-	platform *string
-	minify bool
-	tsconfig *string
+	extends      *string
+	outDir       *string
+	outFile      *string
+	inputs       []string
+	ejs          bool
+	cjs          bool
+	write        bool
+	bundle       bool
+	target       *string
+	platform     *string
+	minify       bool
+	tsconfig     *string
 	outExtension map[string]string
 }
 
@@ -39,6 +40,7 @@ var ConfigPresets = CfgMapT{
 	EmptyConfigName: &RunConfig{},
 	DefaultConfigName: &RunConfig{
 		extends:  tateru.String(EmptyConfigName),
+		write:    true,
 		bundle:   true,
 		target:   tateru.String("esnext"),
 		minify:   true,
