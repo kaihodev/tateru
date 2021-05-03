@@ -68,7 +68,9 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 	}
 	cfg.globalPreset = globalPreset
 	preset := ConfigPresets[globalPreset]
-	if preset != nil { MergeConfig(preset, (*RunConfig) (unsafe.Pointer(cfg))) }
+
+	p := (*RunConfig) (unsafe.Pointer(cfg))
+	if preset != nil { MergeConfig(preset, p) }
 
 	builds := make(CfgMapT)
 	if modules == nil || len(modules) == 0 {
@@ -87,6 +89,7 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 		module, err := t.GetTableToml(m)
 		if err != nil { log.Fatalf("Unable to find module to build: %s", m) }
 		c := MakeRunConfigFromToml(module)
+		MergeConfig(p, c)
 		c.name = m
 		builds[m] = c
 	}
