@@ -70,6 +70,7 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 	preset := ConfigPresets[globalPreset]
 
 	p := (*RunConfig) (unsafe.Pointer(cfg))
+	SetRunConfigFromToml(p, t)
 	if preset != nil { MergeConfig(preset, p) }
 
 	builds := make(CfgMapT)
