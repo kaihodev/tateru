@@ -4,6 +4,7 @@ import (
 	"github.com/chunni/fiptoml"
 	tateru "github.com/kaihodev/tateru/src/reflect"
 	"log"
+	"os"
 	"reflect"
 	"unsafe"
 )
@@ -64,12 +65,11 @@ const (
 func FromToml(t *fiptoml.Toml, modules []string) *Config {
 	cfg := &Config{}
 	var m string
-
-	globalPreset, missing := t.GetStringEx("global_preset")
-	if missing != nil { globalPreset = DefaultConfigName
-	}
-	cfg.globalPreset = globalPreset
-	preset := ConfigPresets[globalPreset]
+	d := tateru.ExposeTomlDict(t)
+	globalPreset, ok := d["global_preset"]
+	if !ok { globalPreset = DefaultConfigName }
+	cfg.globalPreset = globalPreset.(string)
+	preset := ConfigPresets[cfg.globalPreset]
 
 	p := (*RunConfig) (unsafe.Pointer(cfg))
 	SetRunConfigFromToml(p, t)
@@ -77,7 +77,6 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 
 	builds := make(CfgMapT)
 	if modules == nil || len(modules) == 0 {
-		d := tateru.ExposeTomlDict(t)
 		modules = make([]string, len(d))
 		i := 0
 		for k := range d {
@@ -90,7 +89,7 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 	for i, L := 0, len(modules); i != L; i++ {
 		m = modules[i]
 		module, err := t.GetTableToml(m)
-		if err != nil { log.Fatalf("Unable to find module to build: %s", m) }
+		if err != nil || module == nil { log.Fatalf("Unable to find module to build: %s", m) }
 		c := MakeRunConfigFromToml(module)
 		MergeConfig(p, c)
 		c.name = m
@@ -104,9 +103,9 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 func FromTomlFile(loc string, modules []string) *Config {
 	data := ReadConfig(loc)
 	if data == nil {
-		log.Panicf("could not resolve config path %s", loc)
+		log.Printf("could not locate a .taterurc config... %s\n", loc)
+		os.Exit(1)
 	}
-	log.Printf("[tateru] Loaded config, %v bytes", len(*data))
 	toml, err := fiptoml.Parse(*data)
 	if err != nil { log.Panic(err) }
 	return FromToml(toml, modules)

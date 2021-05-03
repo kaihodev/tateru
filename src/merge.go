@@ -11,30 +11,31 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	var modules, target string
 	var paths []string
 	var ejs, cjs, mjs bool
-
-	modules, _ = t.GetStringEx("modules")
-	target, _ = t.GetStringEx("target")
+	d := tateru.ExposeTomlDict(t)
+	modules, _ = d["modules"].(string)
+	target, _ = d["target"].(string)
 	paths, _ = filepath.Glob(modules)
-	ejs, _ = t.GetBoolEx("ejs")
-	cjs, _ = t.GetBoolEx("cjs")
-	mjs, _ = t.GetBoolEx("mjs")
+	ejs, _ = d["ejs"].(bool)
+	cjs, _ = d["cjs"].(bool)
+	mjs, _ = d["mjs"].(bool)
 
-	if outDir, e := t.GetStringEx("out_dir"); e == nil {
-		c.outDir = tateru.String(outDir)
+	if outDir, ok := d["out_dir"]; ok {
+		c.outDir = tateru.String(outDir.(string))
 	} else {
-		outFile, _ := t.GetStringEx("out_file")
-		c.outFile = tateru.String(outFile)
+		outFile, ok := d["out_file"]
+		if ok { c.outFile = tateru.String(outFile.(string)) }
 	}
 
 	c.inputs = paths
 	c.ejs = ejs
 	c.cjs = cjs
 
-	if outExt := t.GetStringArray("out_extensions"); outExt == nil {
+	if outExt, ok := d["out_extensions"]; ok {
 		ext := make(OutExtT)
 		var s string
-		for i, L := 0, len(outExt); i != L; i++ {
-			s = outExt[i]
+		A := outExt.([]string)
+		for i, L := 0, len(A); i != L; i++ {
+			s = A[i]
 			kv := strings.Split(s, "=")
 			ext[kv[0]] = ext[kv[1]]
 		}

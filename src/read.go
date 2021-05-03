@@ -15,6 +15,7 @@ func ReadConfig(loc string) *[]byte {
 	if fileName == "." { fileName = ".taterurc" }
 	basePath := "/"
 	for {
+		targetPath, _ = filepath.Abs(targetPath)
 		rel, _ := filepath.Rel(basePath, targetPath)
 		if rel == "." { break }
 		p := path.Join(targetPath, fileName)
