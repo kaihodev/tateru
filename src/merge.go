@@ -51,8 +51,10 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 func MergeConfig(def *RunConfig, o *RunConfig) {
 	if def.write { o.write = def.write }
 	if def.bundle { o.bundle = def.bundle }
-	if def.target != nil { o.target = def.target }
-	if def.platform != nil { o.platform = def.platform }
+	if o.target == nil { o.target = def.target }
+	if o.platform == nil { o.platform = def.platform }
 	if def.minify { o.minify = true }
-	if def.tsconfig != nil { o.tsconfig = def.tsconfig }
+	if o.tsconfig == nil { o.tsconfig = def.tsconfig }
+	if o.outDir == nil { o.outDir = def.outDir }
+	if o.outFile == nil { o.outFile = def.outFile }
 }
