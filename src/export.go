@@ -65,7 +65,7 @@ func (c *RunConfig) Target() api.Target {
 func (c *RunConfig) Minify() bool { return c.minify }
 func (c *RunConfig) TsConfig() *string { return c.tsconfig }
 func (c *RunConfig) Bundle() bool { return c.bundle }
-func (c *RunConfig) OutEx() map[string]string { return c.outExtension }
+func (c *RunConfig) OutEx() OutExtT { return c.outExtension }
 
 func (c *RunConfig) MakeESBOptions() *api.BuildOptions {
 	opts := &api.BuildOptions{}

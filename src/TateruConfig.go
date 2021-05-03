@@ -21,7 +21,7 @@ type RunConfig struct {
 	platform     *string
 	minify       bool
 	tsconfig     *string
-	outExtension map[string]string
+	outExtension OutExtT
 
 	name string
 }
@@ -37,6 +37,8 @@ const (
 )
 
 type CfgMapT = map[string]*RunConfig
+type OutExtT = map[string]string
+
 var ConfigPresets = CfgMapT{
 	EmptyConfigName: &RunConfig{name: EmptyConfigName},
 	DefaultConfigName: &RunConfig{

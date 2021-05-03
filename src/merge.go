@@ -31,7 +31,7 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	c.cjs = cjs
 
 	if outExt := t.GetStringArray("out_extensions"); outExt == nil {
-		ext := make(map[string]string)
+		ext := make(OutExtT)
 		var s string
 		for i, L := 0, len(outExt); i != L; i++ {
 			s = outExt[i]
@@ -41,7 +41,7 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 		c.outExtension = ext
 	}
 	if mjs {
-		if c.outExtension == nil { c.outExtension = make(map[string]string) }
+		if c.outExtension == nil { c.outExtension = make(OutExtT) }
 		c.outExtension[".js"] = ".mjs"
 	}
 
