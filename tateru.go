@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/evanw/esbuild/pkg/api"
 	tateru "github.com/kaihodev/tateru/src"
 	"log"
@@ -8,8 +9,15 @@ import (
 
 
 func main() {
-	println("[tateru] starting...")
-	cfg := tateru.FromTomlFile("", nil)
+	log.Println("[tateru] starting...")
+	flag.Parse()
+	modules := flag.Args()
+	if len(modules) == 0 {
+		log.Println("[tateru] building all modules in toml...\n")
+	} else {
+		log.Printf("[tateru] building modules: %v...\n", modules)
+	}
+	cfg := tateru.FromTomlFile("", modules)
 
 	builds, L, names := cfg.GetBuilds()
 	for i := 0; i != L; i++ {
