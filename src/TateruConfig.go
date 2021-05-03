@@ -43,6 +43,7 @@ var ConfigPresets = CfgMapT{
 		extends:  tateru.String(EmptyConfigName),
 		write:    true,
 		bundle:   true,
+		platform: tateru.String("node"),
 		target:   tateru.String("esnext"),
 		minify:   true,
 		tsconfig: tateru.String("tsconfig.json"),

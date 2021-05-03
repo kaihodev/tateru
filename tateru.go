@@ -6,16 +6,18 @@ import (
 	"log"
 )
 
+
 func main() {
 	println("[tateru] starting...")
 	cfg := tateru.FromTomlFile("", nil)
-	log.Printf("[tateru] resolved config: %v", cfg)
 
-	builds, L := cfg.GetBuilds()
+	builds, L, names := cfg.GetBuilds()
 	for i := 0; i != L; i++ {
 		opts := *builds[i]
-		log.Println(opts)
 		result := api.Build(opts)
-		log.Println(result)
+		if result.Errors != nil {
+			log.Fatalf("[tateru] unable to compile: %v", result.Errors)
+		}
+		log.Printf("[tateru] success %s\n", names[i])
 	}
 }
