@@ -11,6 +11,24 @@
   "scripts": {
     "install": "node src/install.js"
   },
+  "keywords": [
+    "go",
+    "golang",
+    "compiler",
+    "ts",
+    "typescript",
+    "js",
+    "javascript",
+    "es6",
+    "jsx",
+    "commonjs",
+    "react",
+    "minifier",
+    "module-bundler",
+    "tateru",
+    "tree-shaking",
+    "source-maps"
+  ],
   "dependencies": {},
   "devDependencies": {
     "eslint": "^7.25.0",
