@@ -1,11 +1,11 @@
 const { join } = require('path');
-const { chmodSync, mkdirSync, statSync } = require('fs');
+const { chmodSync, mkdirSync } = require('fs');
 const { writeFile } = require('fs/promises');
 const { name, cache, fname } = require('./util');
 const fetch = require('./http');
 
 fetch(name, handle);
-if (!statSync(cache, { throwIfNoEntry: false })) mkdirSync(cache, { recursive: true });
+mkdirSync(cache, { recursive: true });
 
 const full = join(cache, fname);
 
