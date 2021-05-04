@@ -1,12 +1,14 @@
 package tateru
 
 import (
-	"github.com/chunni/fiptoml"
-	tateru "github.com/kaihodev/tateru/src/reflect"
 	"log"
 	"os"
 	"reflect"
 	"unsafe"
+
+	"github.com/chunni/fiptoml"
+
+	tateru "github.com/kaihodev/tateru/src/reflect"
 )
 
 type RunConfig struct {

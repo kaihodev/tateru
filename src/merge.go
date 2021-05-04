@@ -1,10 +1,12 @@
 package tateru
 
 import (
-	"github.com/chunni/fiptoml"
-	tateru "github.com/kaihodev/tateru/src/reflect"
 	"path/filepath"
 	"strings"
+
+	"github.com/chunni/fiptoml"
+
+	tateru "github.com/kaihodev/tateru/src/reflect"
 )
 
 func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {

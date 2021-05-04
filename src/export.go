@@ -1,9 +1,10 @@
 package tateru
 
 import (
-	"github.com/evanw/esbuild/pkg/api"
 	"strings"
 	"unsafe"
+
+	"github.com/evanw/esbuild/pkg/api"
 )
 
 func (c *RunConfig) OutType() OutType { return c.outDir != nil }
