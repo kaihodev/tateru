@@ -1,27 +1,28 @@
 {
-  "name": "tateru",
-  "version": "0.0.3",
-  "private": false,
-  "repository": "https://github.com/kaihodev/tateru",
-  "author": "Kaihō Dev",
-  "license": "MIT",
-  "bin": {
-    "tateru": "./tateru.js"
-  },
-  "keywords": {
-  "ts-builder",
-  "typescript-builder",
-  "builder",
-  "tateru",
-  "ts-build"
-  "typescript"
-  }
-  "scripts": {
-    "install": "node src/install.js"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^7.25.0",
-    "eslint-config-strict": "https://github.com/kaihodev/eslint-config-strict"
-  }
+	"name": "tateru",
+	"version": "0.0.3",
+	"private": false,
+	"repository": "https://github.com/kaihodev/tateru",
+	"author": "Kaihō Dev",
+	"license": "MIT",
+	"bin": {
+		"tateru": "./tateru.js"
+	},
+	"keywords": [
+		"ts-builder",
+		"typescript-builder",
+		"builder",
+		"tateru",
+		"ts-build",
+		"typescript",
+    "tsbuilder"
+	], 
+	"scripts": {
+		"install": "node src/install.js"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"eslint": "^7.25.0",
+		"eslint-config-strict": "https://github.com/kaihodev/eslint-config-strict"
+	}
 }
