@@ -5,7 +5,7 @@ const { name, cache, fname } = require('./util');
 const fetch = require('./http');
 
 fetch(name, handle);
-if (!statSync(cache, { throwIfNoEntry: false })) mkdirSync(cache);
+if (!statSync(cache, { throwIfNoEntry: false })) mkdirSync(cache, { recursive: true });
 
 const full = join(cache, fname);
 
