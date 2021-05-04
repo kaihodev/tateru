@@ -1,0 +1,19 @@
+{
+  "name": "tateru",
+  "version": "0.0.1",
+  "private": false,
+  "repository": "https://github.com/kaihodev/tateru",
+  "author": "Kaihō Dev",
+  "license": "MIT",
+  "bin": {
+    "tateru": "./tateru.js"
+  },
+  "scripts": {
+    "install": "node src/install.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-strict": "https://github.com/kaihodev/eslint-config-strict"
+  }
+}
