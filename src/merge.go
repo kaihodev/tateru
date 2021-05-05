@@ -60,4 +60,6 @@ func MergeConfig(def *RunConfig, o *RunConfig) {
 	if o.tsconfig == nil { o.tsconfig = def.tsconfig }
 	if o.outDir == nil { o.outDir = def.outDir }
 	if o.outFile == nil { o.outFile = def.outFile }
+	if def.cjs { o.cjs = true }
+	if def.ejs { o.ejs = true }
 }
