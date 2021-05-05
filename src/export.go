@@ -78,7 +78,7 @@ func (c *RunConfig) MakeESBOptions() *api.BuildOptions {
 	opts.EntryPoints = c.Inputs()
 	opts.Format = c.Format()
 	opts.Write = c.Write()
-	opts.Bundle = c.Bundle()
+	if strings.HasSuffix(c.name, "_bundle") { opts.Bundle = true } else { opts.Bundle = c.Bundle() }
 	opts.Target = c.Target()
 	opts.Platform = c.Platform()
 	if c.Minify() {
