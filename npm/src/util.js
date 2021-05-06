@@ -33,5 +33,5 @@ module.exports = {
   os,
   cache,
   name,
-  fname: `${version}-${name}${os === 'win32' ? '.exe' : ''}`,
+  fname: `${version}-${name}${os === 'windows' ? '.exe' : ''}`,
 };
