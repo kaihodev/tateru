@@ -11,8 +11,8 @@ func (c *RunConfig) OutType() OutType { return c.outDir != nil }
 func (c *RunConfig) OutPath() *string { if c.OutType() == Dir { return c.outDir } else { return c.outFile } }
 
 func (c *RunConfig) Format() api.Format {
-	if c.cjs { return api.FormatCommonJS }
 	if c.ejs { return api.FormatESModule }
+	if c.cjs { return api.FormatCommonJS }
 	return api.FormatDefault
 }
 
