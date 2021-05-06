@@ -15,12 +15,15 @@ const arch = {
   'mipsel': 'mipsle',
 }[process.arch];
 
-const os = process.platform === 'sunos' ? 'solaris' : process.platform;
+const os = {
+  'win32': 'windows',
+  'sunos': 'solaris',
+}[process.platform] ?? process.platform;
 
 const cache = {
   'linux': process.env.XDG_CACHE_HOME ? join(process.env.XDG_CACHE_HOME, 'tateru-bin') : join(home, '.cache', 'tateru-bin'),
   'darwin': join(home, 'Library', 'Caches', 'tateru-bin'),
-  'win32': join(home, 'AppData', 'Local', 'Cache', 'tateru-bin'),
+  'windows': join(home, 'AppData', 'Local', 'Cache', 'tateru-bin'),
 }[os] ?? join(home, '.cache', 'tateru-bin');
 
 const name = `${os}-${arch}-tateru`;
