@@ -28,9 +28,9 @@ Set up your tateru toml:
 2. Add your build config
 3. Run `$ tateru`
 
-You may also add tateru to your scripts object in package.json. From there, you can invoke the build via yarn build. For more details, consult [hikidashi](https://npm.im/hikidashi).
+You may also add tateru to your scripts object in package.json. From there, you can invoke the build via yarn build. For more details, see how we use it in [hikidashi](https://npm.im/hikidashi).
 
-Example toml used for [hikidashi](https://npm.im/hikidashi):
+Example partial toml:
 
 ```toml
 out_dir = 'dist'
@@ -42,26 +42,18 @@ out_dir = 'dist/safe'
 ejs = true
 mjs = true
 
-[unsafe]
-modules = 'src/unsafe/**/*.ts'
-out_dir = 'dist/unsafe'
-ejs = true
-mjs = true
-
 [safe_bundle]
 modules = 'src/safe.ts'
-bundle = true
-
-[unsafe_bundle]
-modules = 'src/unsafe.ts'
-bundle = true
 
 [hikidashi_module]
 modules = 'src/index.ts'
-
 
 [tests]
 modules = 'tests/**/*.ts'
 out_dir = 'tests/dist'
 minify = true
 ```
+
+<div align="center">
+<img src="https://files.yande.re/sample/8eb9828da10f4cee45fa2297dce552a8/yande.re%20415409%20sample%20akashi_%28azur_lane%29%20animal_ears%20azur_lane%20heels%20nishina_hima.jpg" width="720" />
+</div>
