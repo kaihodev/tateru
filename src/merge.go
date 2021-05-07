@@ -1,10 +1,10 @@
 package tateru
 
 import (
-	"path/filepath"
 	"strings"
 
 	"github.com/chunni/fiptoml"
+	"github.com/mattn/go-zglob"
 
 	tateru "github.com/kaihodev/tateru/src/reflect"
 )
@@ -16,7 +16,7 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	d := tateru.ExposeTomlDict(t)
 	modules, _ = d["modules"].(string)
 	target, _ = d["target"].(string)
-	paths, _ = filepath.Glob(modules)
+	paths, _ = zglob.GlobFollowSymlinks(modules)
 	ejs, _ = d["ejs"].(bool)
 	cjs, _ = d["cjs"].(bool)
 	mjs, _ = d["mjs"].(bool)
