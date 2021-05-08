@@ -56,14 +56,14 @@ func main() {
 	} else {
 		for i := 0; i != L; i++ {
 			opts := *builds[i]
-			if opts.Watch != nil {
-				hasWatch = true
+			if opts.Watch == nil {
 				result := api.Build(opts)
 				if result.Errors != nil {
 					log.Fatalf("[tateru] unable to compile: %v", result.Errors)
 				}
 				log.Printf("[tateru (%d)] success %s\n", i, names[i])
 			} else {
+				hasWatch = true
 				go api.Build(opts)
 			}
 		}
