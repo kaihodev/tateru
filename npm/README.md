@@ -36,22 +36,29 @@ Example partial toml:
 out_dir = 'dist'
 cjs = true
 
-[safe]
-modules = 'src/safe/**/*.ts'
-out_dir = 'dist/safe'
+[submodule]
+modules = 'src/sub/**/*.ts'
+out_dir = 'dist/sub'
 ejs = true
 mjs = true
 
-[safe_bundle]
-modules = 'src/safe.ts'
-
-[hikidashi_module]
+[dist_bundle]
 modules = 'src/index.ts'
 
 [tests]
 modules = 'tests/**/*.ts'
 out_dir = 'tests/dist'
-minify = true
+watch = true
+```
+
+Then, modify your package.json to use yarn build:src and yarn build:test.
+```json
+{...
+  "scripts": {
+    "build:src": "tateru submodule dist_bundle",
+    "build:test": "tateru tests"
+  }
+...}
 ```
 
 <div align="center">
