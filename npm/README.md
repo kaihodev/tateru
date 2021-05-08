@@ -14,7 +14,7 @@ Tateru is released under the [MIT license](https://github.com/kaihodev/tateru/bl
 
 **Use any of the following.**
 ```shell
-$ npm i -g tateru
+$ npm i -g tateru@latest
 $ yarn global add tateru
 $ pnpm install --global tateru
 ```
