@@ -67,8 +67,11 @@ func (c *RunConfig) Minify() bool { return c.minify }
 func (c *RunConfig) TsConfig() *string { return c.tsconfig }
 func (c *RunConfig) Bundle() bool { return c.bundle }
 func (c *RunConfig) OutEx() OutExtT { return c.outExtension }
+func (c *RunConfig) Watch() bool { return c.watch }
 
-func (c *RunConfig) MakeESBOptions() *api.BuildOptions {
+var WatchOpts *api.WatchMode
+
+func (c *RunConfig) MakeESBOptions(watchAll bool) *api.BuildOptions {
 	opts := &api.BuildOptions{}
 	if c.OutType() == File {
 		opts.Outfile = *c.OutPath()
@@ -88,14 +91,17 @@ func (c *RunConfig) MakeESBOptions() *api.BuildOptions {
 	}
 	if tsc := c.TsConfig(); tsc != nil { opts.Tsconfig = *tsc }
 	if oE := c.OutEx(); oE != nil { opts.OutExtensions = oE }
+	if watchAll || strings.HasSuffix(c.name, "_watch") { opts.Watch = WatchOpts
+	} else { if c.Watch() { opts.Watch = WatchOpts
+	} }
 	return opts
 }
 func (c *Config) ExposeBuilds() CfgMapT { return c.builds }
-func (c *Config) GetBuilds() ([]*api.BuildOptions, int, []string) {
+func (c *Config) GetBuilds(watchAll bool) ([]*api.BuildOptions, int, []string) {
 	b := c.builds
 	L := len(b)
 	if L == 0 {
-		return []*api.BuildOptions{c.MakeESBOptions()}, 1, []string{"main"}
+		return []*api.BuildOptions{c.MakeESBOptions(watchAll)}, 1, []string{"main"}
 	}
 	p := (*RunConfig) (unsafe.Pointer(c))
 	i, result, names := 0, make([]*api.BuildOptions, L), make([]string, L)
@@ -103,7 +109,7 @@ func (c *Config) GetBuilds() ([]*api.BuildOptions, int, []string) {
 		cfg := b[k]
 		names[i] = cfg.name
 		MergeConfig(p, cfg)
-		result[i] = cfg.MakeESBOptions()
+		result[i] = cfg.MakeESBOptions(watchAll)
 		i++
 	}
 	return result, L, names

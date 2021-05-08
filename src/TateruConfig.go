@@ -25,6 +25,7 @@ type RunConfig struct {
 	minify       bool
 	tsconfig     *string
 	outExtension OutExtT
+	watch        bool
 
 	name string
 }

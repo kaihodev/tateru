@@ -12,7 +12,7 @@ import (
 func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	var modules, target string
 	var paths []string
-	var ejs, cjs, mjs bool
+	var ejs, cjs, mjs, watch bool
 	d := tateru.ExposeTomlDict(t)
 	modules, _ = d["modules"].(string)
 	target, _ = d["target"].(string)
@@ -20,6 +20,7 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	ejs, _ = d["ejs"].(bool)
 	cjs, _ = d["cjs"].(bool)
 	mjs, _ = d["mjs"].(bool)
+	watch, _ = d["watch"].(bool)
 
 	if outDir, ok := d["out_dir"]; ok {
 		c.outDir = tateru.String(outDir.(string))
@@ -31,6 +32,7 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	c.inputs = paths
 	c.ejs = ejs
 	c.cjs = cjs
+	c.watch = watch
 
 	if outExt, ok := d["out_extensions"]; ok {
 		ext := make(OutExtT)
