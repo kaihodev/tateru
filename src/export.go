@@ -70,8 +70,26 @@ func (c *RunConfig) OutEx() OutExtT { return c.outExtension }
 func (c *RunConfig) Watch() bool { return c.watch }
 
 var WatchOpts *api.WatchMode
+func smapMode(smap string) api.SourceMap {
+	switch strings.ToLower(smap) {
+	case "_":
+	case "none":
+		break
+	case "":
+	case "true":
+	case "inline":
+		return api.SourceMapInline
+	case "linked":
+		return api.SourceMapLinked
+	case "external":
+		return api.SourceMapExternal
+	case "both":
+		return api.SourceMapInlineAndExternal
+	}
+	return api.SourceMapNone
+}
 
-func (c *RunConfig) MakeESBOptions(watchAll bool) *api.BuildOptions {
+func (c *RunConfig) MakeESBOptions(watchAll bool, smap string) *api.BuildOptions {
 	opts := &api.BuildOptions{}
 	if c.OutType() == File {
 		opts.Outfile = *c.OutPath()
@@ -94,14 +112,15 @@ func (c *RunConfig) MakeESBOptions(watchAll bool) *api.BuildOptions {
 	if watchAll || strings.HasSuffix(c.name, "_watch") { opts.Watch = WatchOpts
 	} else { if c.Watch() { opts.Watch = WatchOpts
 	} }
+	opts.Sourcemap = smapMode(smap)
 	return opts
 }
 func (c *Config) ExposeBuilds() CfgMapT { return c.builds }
-func (c *Config) GetBuilds(watchAll bool) ([]*api.BuildOptions, int, []string) {
+func (c *Config) GetBuilds(watchAll bool, smap string) ([]*api.BuildOptions, int, []string) {
 	b := c.builds
 	L := len(b)
 	if L == 0 {
-		return []*api.BuildOptions{c.MakeESBOptions(watchAll)}, 1, []string{"main"}
+		return []*api.BuildOptions{c.MakeESBOptions(watchAll, smap)}, 1, []string{"main"}
 	}
 	p := (*RunConfig) (unsafe.Pointer(c))
 	i, result, names := 0, make([]*api.BuildOptions, L), make([]string, L)
@@ -109,7 +128,7 @@ func (c *Config) GetBuilds(watchAll bool) ([]*api.BuildOptions, int, []string) {
 		cfg := b[k]
 		names[i] = cfg.name
 		MergeConfig(p, cfg)
-		result[i] = cfg.MakeESBOptions(watchAll)
+		result[i] = cfg.MakeESBOptions(watchAll, smap)
 		i++
 	}
 	return result, L, names

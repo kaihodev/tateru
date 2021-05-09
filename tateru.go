@@ -24,6 +24,7 @@ func Handle(result api.BuildResult) {
 func main() {
 	loc := flag.String("config", "", "path to taterurc config file")
 	watchAll := flag.Bool("watch", false, "true/false flag to enable watch mode on all builds")
+	smap := flag.String("smap", "_", "mode to enable source maps on all builds")
 	flag.Parse()
 	modules := flag.Args()
 	if len(modules) == 0 {
@@ -35,7 +36,7 @@ func main() {
 	tateru.WatchOpts = &api.WatchMode{OnRebuild: Handle}
 
 	cfg := tateru.FromTomlFile(*loc, modules)
-	builds, L, names := cfg.GetBuilds(*watchAll)
+	builds, L, names := cfg.GetBuilds(*watchAll, *smap)
 	hasWatch := false
 	if L > 5 {
 		wg := sync.WaitGroup{}
