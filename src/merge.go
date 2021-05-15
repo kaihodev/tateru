@@ -22,11 +22,17 @@ func SetRunConfigFromToml(c *RunConfig, t *fiptoml.Toml) {
 	mjs, _ = d["mjs"].(bool)
 	watch, _ = d["watch"].(bool)
 
+	if minify, ok := d["minify"]; ok {
+		c.minify = minify.(bool)
+	}
 	if outDir, ok := d["out_dir"]; ok {
 		c.outDir = tateru.String(outDir.(string))
 	} else {
 		outFile, ok := d["out_file"]
 		if ok { c.outFile = tateru.String(outFile.(string)) }
+	}
+	if tsconfig, ok := d["tsconfig"]; ok {
+		c.tsconfig = tateru.String(tsconfig.(string))
 	}
 
 	c.inputs = paths
