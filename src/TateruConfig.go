@@ -92,8 +92,7 @@ func FromToml(t *fiptoml.Toml, modules []string) *Config {
 		m = modules[i]
 		module, err := t.GetTableToml(m)
 		if err != nil || module == nil { log.Fatalf("Unable to find module to build: %s", m) }
-		c := MakeRunConfigFromToml(module)
-		MergeConfig(p, c)
+		c := MakeRunConfigFromToml(p, module)
 		c.name = m
 		builds[m] = c
 	}
@@ -113,8 +112,9 @@ func FromTomlFile(loc string, modules []string) *Config {
 	return FromToml(toml, modules)
 }
 
-func MakeRunConfigFromToml(t *fiptoml.Toml) *RunConfig {
+func MakeRunConfigFromToml(preset *RunConfig, t *fiptoml.Toml) *RunConfig {
 	cfg := &RunConfig{}
+	MergeConfig(preset, cfg)
 	SetRunConfigFromToml(cfg, t)
 	return cfg
 }
