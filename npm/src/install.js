@@ -7,7 +7,7 @@ const fetch = require('./http');
 fetch(name, handle);
 mkdirSync(cache, { recursive: true });
 
-const full = join(cache, fname);
+const full = join(cache, fname).replace(/\\/g, '\\\\');
 
 async function handle(raw) {
   await Promise.all([
