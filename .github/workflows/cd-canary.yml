@@ -77,8 +77,9 @@ jobs:
         env:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
+          CGO_ENABLED: 0
         run: |
-          go build -o build/"$GOOS"-"$GOARCH"-tateru
+          go build -ldflags="-s -w" -trimpath -o build/"$GOOS"-"$GOARCH"-tateru
 
       - name: Release Canary Build
         env:

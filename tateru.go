@@ -25,6 +25,7 @@ func main() {
 	loc := flag.String("config", "", "path to taterurc config file")
 	watchAll := flag.Bool("watch", false, "true/false flag to enable watch mode on all builds")
 	smap := flag.String("smap", "_", "mode to enable source maps on all builds")
+	ll := flag.Int("loglevel", 0, "log level: 0 = off, 1 = verbose, 2 = debug, 3 = info, 4 = warning, 5 = error")
 	flag.Parse()
 	modules := flag.Args()
 	if len(modules) == 0 {
@@ -43,6 +44,7 @@ func main() {
 		wg.Add(L)
 		for i := 0; i != L; i++ {
 			opts := *builds[i]
+			opts.LogLevel = api.LogLevel(*ll)
 			if opts.Watch != nil { hasWatch = true }
 			go func(i int) {
 				result := api.Build(opts)
@@ -57,6 +59,7 @@ func main() {
 	} else {
 		for i := 0; i != L; i++ {
 			opts := *builds[i]
+			opts.LogLevel = api.LogLevel(*ll)
 			if opts.Watch == nil {
 				result := api.Build(opts)
 				if result.Errors != nil {
