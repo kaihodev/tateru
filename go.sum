@@ -1,7 +1,7 @@
 github.com/chunni/fiptoml v0.0.0-20150825004433-6b149b2bf4ba h1:+ofyp80hECIPWTTQL6KONEvJO0t3BAJQDPoeepMUWlM=
 github.com/chunni/fiptoml v0.0.0-20150825004433-6b149b2bf4ba/go.mod h1:4/GfNQCaT/fvT5qVjCmk13hcdO2MokOIutficlnCDb0=
-github.com/evanw/esbuild v0.11.14 h1:y7LRq5lFjmucH8XbhmtJQbcHvBLE9GcX8bIKK0Hrq98=
-github.com/evanw/esbuild v0.11.14/go.mod h1:y2AFBAGVelPqPodpdtxWWqe6n2jYf5FrsJbligmRmuw=
+github.com/evanw/esbuild v0.12.8 h1:NVQ1+s3yHyAh+uHtG50/DrMCndKbUVwmYmOAGWM/jxU=
+github.com/evanw/esbuild v0.12.8/go.mod h1:y2AFBAGVelPqPodpdtxWWqe6n2jYf5FrsJbligmRmuw=
 github.com/mattn/go-zglob v0.0.3 h1:6Ry4EYsScDyt5di4OI6xw1bYhOqfE5S33Z1OPy+d+To=
 github.com/mattn/go-zglob v0.0.3/go.mod h1:9fxibJccNxU2cnpIKLRRFA7zX7qhkJIQWBb449FYHOo=
 golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3 h1:5B6i6EAiSYyejWfvc5Rc9BbI3rzIsrrXfAQBWnYfn+w=
