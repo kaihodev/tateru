@@ -25,7 +25,7 @@ func ReadConfig(loc string) *[]byte {
 		}
 		bytes, err := ioutil.ReadFile(p)
 		if err != nil { log.Fatalln(err) }
-		return &bytes
+		return annihilateCRLFUnsafe(&bytes)
 	}
 	return nil
 }
@@ -37,4 +37,17 @@ func exists(name string) bool {
 		}
 	}
 	return true
+}
+
+func annihilateCRLFUnsafe(bs *[]byte) *[]byte {
+	b := *bs
+	i, offset, L := 0, 0, len(b)
+	for i != L {
+		c := b[i]
+		if c == '\r' { offset++ }
+		b[i] = b[i + offset]
+		i++
+	}
+	*bs = b[:i - offset]
+	return bs
 }
