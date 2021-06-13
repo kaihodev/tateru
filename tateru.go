@@ -45,6 +45,7 @@ func main() {
 		for i := 0; i != L; i++ {
 			opts := *builds[i]
 			opts.LogLevel = api.LogLevel(*ll)
+			if opts.LogLevel == api.LogLevelVerbose { log.Printf("[tateru] scheduling config %d: %+v", i, opts) }
 			if opts.Watch != nil { hasWatch = true }
 			go func(i int) {
 				result := api.Build(opts)
@@ -60,6 +61,7 @@ func main() {
 		for i := 0; i != L; i++ {
 			opts := *builds[i]
 			opts.LogLevel = api.LogLevel(*ll)
+			if opts.LogLevel == api.LogLevelVerbose { log.Printf("[tateru] scheduling config %d: %+v", i, opts) }
 			if opts.Watch == nil {
 				result := api.Build(opts)
 				if result.Errors != nil {
