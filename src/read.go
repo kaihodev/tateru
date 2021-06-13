@@ -40,13 +40,14 @@ func exists(name string) bool {
 }
 
 func annihilateCRLFUnsafe(bs *[]byte) *[]byte {
-	b := *bs
-	i, offset, L := 0, 0, len(b)
-	for i != L {
+	b, i, offset := *bs, 0, 0
+	for L := len(b); i != L; i++ {
 		c := b[i]
-		if c == '\r' { offset++ }
-		b[i] = b[i + offset]
-		i++
+		if c == '\r' {
+			offset++
+			continue
+		}
+		b[i - offset] = b[i]
 	}
 	*bs = b[:i - offset]
 	return bs
