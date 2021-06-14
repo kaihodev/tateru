@@ -103,20 +103,20 @@ jobs:
           git config --global user.email '${{ secrets.GH_EMAIL }}'
           git config --global user.name '${{ secrets.GH_USER }}'
           mkdir build
+          mkdir bin
 
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          path: build
+          path: bin
 
       - name: Setup git upload
         env:
           USE_SSH: true
           GIT_USER: ${{ secrets.GH_USER }}
         run: |
-          cd ./build && ls -R
-          mv ./**/*-tateru .
-
+          mv ./bin/**/*-tateru ./build
+          cd ../build && ls
           git init
           git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
           git checkout -b canary-builds
