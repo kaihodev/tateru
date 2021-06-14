@@ -120,7 +120,6 @@ jobs:
           git init
           git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
           git checkout -b canary-builds
-          git branch --set-upstream-to=origin/canary-builds canary-builds
           cd ..
 
       - name: Release Canary Build
