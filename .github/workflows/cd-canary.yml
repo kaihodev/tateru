@@ -116,11 +116,10 @@ jobs:
           GIT_USER: ${{ secrets.GH_USER }}
         run: |
           mv ./bin/**/*-tateru ./build
-          cd ../build && ls
+          cd ./build && ls
           git init
           git remote add origin git@github.com:${{ secrets.GH_USER }}/tateru.git
           git checkout -b canary-builds
-          git pull origin canary-builds
           git branch --set-upstream-to=origin/canary-builds canary-builds
           cd ..
 
@@ -134,16 +133,7 @@ jobs:
 
           if [[ $(git diff --stat --staged) != '' ]]; then
             git commit -m "Deploy canary - based on ${{ github.sha }}"
-            export failed=0
-            (git pull origin canary-builds && git push --set-upstream origin canary-builds) || export failed="1"
-            while [ "$failed" = "1" ]
-            do
-              if (sleep 3 && git pull origin canary-builds && git push --set-upstream origin canary-builds && export success="1"); then
-                break
-              else
-                echo "retrying push..."
-              fi
-            done
+            git push --force --set-upstream origin canary-builds
           else
             echo "WD clean"
           fi
