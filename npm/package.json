@@ -1,6 +1,6 @@
 {
   "name": "tateru",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Build your TypeScript projects with speed and ease~",
   "private": false,
   "repository": "https://github.com/kaihodev/tateru",
