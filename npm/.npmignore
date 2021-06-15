@@ -1,6 +1,9 @@
 *.tgz
 node_modules
 build
+src
+.taterurc
+tateru.js
 .eslintrc*
 yarn.lock
 package-lock.json

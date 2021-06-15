@@ -6,11 +6,13 @@
   "repository": "https://github.com/kaihodev/tateru",
   "author": "Kaihō Dev",
   "license": "MIT",
+  "main": "./dist/tateru.js",
   "bin": {
-    "tateru": "./tateru.js"
+    "tateru": "./dist/tateru.js"
   },
   "scripts": {
-    "install": "node src/install.js"
+    "build": "tateru",
+    "install": "node ./dist/tateru.js --install-only"
   },
   "keywords": [
     "go",

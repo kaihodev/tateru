@@ -1,0 +1,6 @@
+[tateru_bundle]
+modules = './tateru.js'
+tsconfig = ''
+out_dir = 'dist'
+cjs = true
+minify = true

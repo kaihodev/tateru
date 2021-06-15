@@ -25,7 +25,7 @@ func main() {
 	loc := flag.String("config", "", "path to taterurc config file")
 	watchAll := flag.Bool("watch", false, "true/false flag to enable watch mode on all builds")
 	smap := flag.String("smap", "_", "mode to enable source maps on all builds")
-	ll := flag.Int("loglevel", 0, "log level: 0 = off, 1 = verbose, 2 = debug, 3 = info, 4 = warning, 5 = error")
+	ll := flag.Int("loglevel", 3, "log level: 0 = off, 1 = verbose, 2 = debug, 3 = info, 4 = warning, 5 = error")
 	flag.Parse()
 	modules := flag.Args()
 	if len(modules) == 0 {

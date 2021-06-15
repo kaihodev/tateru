@@ -1,19 +1,32 @@
 const { join } = require('path');
-const { chmodSync, mkdirSync } = require('fs');
-const { writeFile } = require('fs/promises');
+const { writeFileSync, chmodSync, mkdirSync, existsSync } = require('fs');
 const { name, cache, fname } = require('./util');
 const fetch = require('./http');
 
-fetch(name, handle);
-mkdirSync(cache, { recursive: true });
+const ensure_cache = exports.ensure_cache = function ensure_cache() {
+  mkdirSync(cache, { recursive: true });
+  const full = join(cache, fname).replace(/\\/g, '\\\\');
+  console.log('[tateru] using cache', full);
+  return full;
+};
 
-const full = join(cache, fname).replace(/\\/g, '\\\\');
+const install = exports.install = function install(f) {
+  return new Promise(res => {
+    fetch(name, handle);
 
-async function handle(raw) {
-  await Promise.all([
-    writeFile(full, raw),
-    writeFile('./tateru.js',
-      `#!/usr/bin/env node\nrequire('child_process').spawnSync('${full}', process.argv.slice(2), { stdio: 'inherit' });`),
-  ]);
-  chmodSync(full, 0o777);
-}
+    const full = f || ensure_cache();
+
+    function handle(raw) {
+      writeFileSync(full, raw);
+      chmodSync(full, 0o777);
+      console.log('[tateru] downloaded new binary to', full);
+      res(full);
+    }
+  });
+};
+
+exports.install_if_missing = function install_if_missing(f) {
+  const full = f || ensure_cache();
+  if (existsSync(full)) return console.log('[tateru] binary found at', full);
+  return install(full);
+};
