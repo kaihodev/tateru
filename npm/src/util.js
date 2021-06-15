@@ -1,3 +1,4 @@
+/* eslint quote-props: ['error', 'consistent'] */
 const { join } = require('path');
 const { homedir } = require('os');
 const { version } = require('../package.json');
@@ -18,13 +19,13 @@ const arch = {
 const os = {
   'win32': 'windows',
   'sunos': 'solaris',
-}[process.platform] ?? process.platform;
+}[process.platform] || process.platform;
 
 const cache = {
   'linux': process.env.XDG_CACHE_HOME ? join(process.env.XDG_CACHE_HOME, 'tateru-bin') : join(home, '.cache', 'tateru-bin'),
   'darwin': join(home, 'Library', 'Caches', 'tateru-bin'),
   'windows': join(home, 'AppData', 'Local', 'Cache', 'tateru-bin'),
-}[os] ?? join(home, '.cache', 'tateru-bin');
+}[os] || join(home, '.cache', 'tateru-bin');
 
 const name = `${os}-${arch}-tateru`;
 
@@ -33,5 +34,6 @@ module.exports = {
   os,
   cache,
   name,
+  version,
   fname: `${version}-${name}${os === 'windows' ? '.exe' : ''}`,
 };
