@@ -17,6 +17,8 @@ jobs:
         include:
           - os: darwin
             arch: amd64
+          - os: darwin
+            arch: arm64
           - os: dragonfly
             arch: amd64
           - os: windows
