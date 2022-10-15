@@ -6,14 +6,15 @@ const { spawnSync } = require('child_process');
 const kUnknownErr = 'Dame dayo onii-chan!~ if you see this, an unknown error occured ｡ﾟヽ(ﾟ´Д｀)ﾉﾟ｡: ｡･ﾟ';
 const kInstall = '--install', kInstallIfMissing = '--install-if-missing',
   kInstallOnly = '--install-only', kInstallIfMissingOnly = '--install-if-missing-only',
-  kHelp = '--help';
+  kHelp = '--help', kVersion = '--version';
 const help = `tateru ${version}
 
 USAGE:
     tateru <FLAGS/ARGS>
 
 CLI FLAGS:
-    ${kHelp}\n\tPrints help information
+    ${kHelp}\n\tPrints help information.
+    ${kVersion}\n\tPrints raw NPM version number.
     ${kInstall}\n\tForce-installs a new canary binary, then runs it.
     ${kInstallIfMissing}\n\tInstalls a new canary binary if it's missing, then runs it.
     ${kInstallOnly}\n\tLike ${kInstall} but does not run the binary.
@@ -35,9 +36,15 @@ const opts = { [kHelp]: false, [kInstall]: false, [kInstallIfMissing]: true, [kI
         rest[rest.length] = kHelp;
         break cli;
       }
+      
+      if (opts[kVersion]) {
+        console.log(version); process.exit(0);
+      }
+
       if (opts[kInstallOnly]) {
         await install(full); process.exit(0);
       }
+      
       if (opts[kInstall]) await install(full);
 
       if (opts[kInstallIfMissingOnly]) {
