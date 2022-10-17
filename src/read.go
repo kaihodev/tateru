@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path"
 	"path/filepath"
 )
 
@@ -18,9 +17,9 @@ func ReadConfig(loc string) *[]byte {
 		targetPath, _ = filepath.Abs(targetPath)
 		rel, _ := filepath.Rel(basePath, targetPath)
 		if rel == "." { break }
-		p := path.Join(targetPath, fileName)
+		p := filepath.Join(targetPath, fileName)
 		if !exists(p) {
-			targetPath = path.Join(targetPath, "..")
+			targetPath = filepath.Join(targetPath, "..")
 			continue
 		}
 		bytes, err := ioutil.ReadFile(p)
