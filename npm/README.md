@@ -28,6 +28,8 @@ Set up your tateru toml:
 2. Add your build config
 3. Run `$ tateru`
 
+Running the tateru script standalone will invoke the build process. Optionally, you may pass CLI args for advanced usage. Try it out with `$ tateru --help` to display available options.
+
 You may also add tateru to your scripts object in package.json. From there, you can invoke the build via yarn build. For more details, see how we use it in [hikidashi](https://npm.im/hikidashi).
 
 Example partial toml:
